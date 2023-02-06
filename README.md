@@ -1,1 +1,2 @@
 # pimm
+Image processing library
