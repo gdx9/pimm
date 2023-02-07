@@ -23,3 +23,18 @@ void cpu::rgb_to_gray_weighted(uint8_t* rgb, uint8_t* gray, const size_t kSize){
         gray[i] = static_cast<uint8_t>((val > 255.f) ? 255.f : (val < 0.f) ? 0.f : val);
     }
 }
+
+void cpu::invertColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst, const size_t kSize){
+    for(size_t i = 0; i < kSize; ++i){
+        rgbImageDst[i] = 255 - rgbImageSrc[i];
+    }
+}
+
+void cpu::solariseColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+    const size_t kSize, const uint8_t kThreshold){
+    for(size_t i = 0; i < kSize; ++i){
+        uint8_t val = rgbImageSrc[i];
+        if(val < kThreshold) val = 255 - val;
+        rgbImageDst[i] = val;
+    }
+}
