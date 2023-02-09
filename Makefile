@@ -12,7 +12,7 @@ INC_DIRS = -I./pimm_cpu
 all: $(LIB_PIMM)
 
 $(PIMM_CPU_OBJ): ./pimm_cpu/conversions.cpp
-	$(CXX) $(CXXFLAGS) -o $(PIMM_CPU_OBJ) -c ./pimm_cpu/conversions.cpp $(INC_DIRS)
+	$(CXX) $(CXXFLAGS) -o $(PIMM_CPU_OBJ) -c $< $(INC_DIRS)
 
 $(PIMM_OBJ): $(PIMM_CPU_OBJ)
 	$(CXX) $(CXXFLAGS) -o $(PIMM_OBJ) -c pimm.cpp -I. $(INC_DIRS)
