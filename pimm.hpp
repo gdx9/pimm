@@ -10,3 +10,12 @@ void invertColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
 
 void solariseColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const uint8_t kThreshold, const PROCESSING_DEVICE kDevice);
+
+void adjustGamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+    const int kWidth, const int kHeight, const float kGamma, const PROCESSING_DEVICE kDevice);
+
+void adjustContrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+    const int kWidth, const int kHeight, const float kContrast, const PROCESSING_DEVICE kDevice);
+
+void adjustBrightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+    const int kWidth, const int kHeight, const int32_t kBrightness, const PROCESSING_DEVICE kDevice);

@@ -27,3 +27,25 @@ void solariseColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     cpu::solariseColor(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kThreshold);
 
 }
+
+void adjustGamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+    const int kWidth, const int kHeight,
+    const float kGamma, const PROCESSING_DEVICE kDevice){
+
+    // CPU
+    cpu::adjustGamma(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kGamma);
+}
+
+void adjustContrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+    const int kWidth, const int kHeight, const float kContrast, const PROCESSING_DEVICE kDevice){
+
+    // CPU
+    cpu::adjustContrast(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kContrast);
+}
+
+void adjustBrightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+    const int kWidth, const int kHeight, const int32_t kBrightness, const PROCESSING_DEVICE kDevice){
+
+    // CPU
+    cpu::adjustBrightness(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kBrightness);
+}

@@ -12,4 +12,13 @@ namespace cpu {
 
     void solariseColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
         const size_t kSize, const uint8_t kThreshold=128);
+
+    void adjustGamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+        const size_t kSize, const float kGamma);
+
+    void adjustContrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+        const size_t kSize, const float kContrast);
+
+    void adjustBrightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+        const size_t kSize, const int32_t kBrightness);
 }
