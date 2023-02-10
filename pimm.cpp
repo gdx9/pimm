@@ -1,6 +1,35 @@
 #include "pimm.hpp"
+#include "cpu_management.hpp"
+#include "conversions.hpp"
+#include "pimm_utils.hpp"
 
 using namespace std;
+using namespace pimm::utils;
+
+namespace pimm{
+
+uint8_t* allocateImageBytes(const size_t kWidth, const size_t kHeight,
+    const COLOR_MODEL kColorModel, const PROCESSING_DEVICE kDevice){
+    // CPU
+    return cpu::allocateImageBytes(kWidth, kHeight, kColorModel);
+}
+
+void releaseImageBytes(uint8_t* imageBytes, const PROCESSING_DEVICE kDevice){
+    // CPU
+    cpu::releaseImageBytes(imageBytes);
+}
+
+void copyImageBytesToDevice(uint8_t* from, uint8_t* to,
+    const PROCESSING_DEVICE kDeviceSrc, const PROCESSING_DEVICE kDeviceDst, const size_t kNumBytes){
+    // to cpu
+    cpu::copyCpu2Cpu(from, to, kNumBytes);
+}
+size_t getImageElementsNumber(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel){
+    return getImageElementsNumber1(kWidth, kHeight, kColorModel);
+}
+
+
+
 
 void rgb_to_gray(uint8_t* rgb, uint8_t* gray,
     const int kWidth, const int kHeight,
@@ -48,4 +77,5 @@ void adjustBrightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
 
     // CPU
     cpu::adjustBrightness(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kBrightness);
+}
 }
