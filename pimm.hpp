@@ -1,5 +1,17 @@
 #include "constants.hpp"
-#include "conversions.hpp"
+#include <cstddef>
+#include <cstdint>
+
+namespace pimm{
+uint8_t* allocateImageBytes(const size_t kWidth, const size_t kHeight,
+    const COLOR_MODEL kColorModel, const PROCESSING_DEVICE kDevice);
+void releaseImageBytes(uint8_t* imageBytes, const PROCESSING_DEVICE kDevice);
+void copyImageBytesToDevice(uint8_t* from, uint8_t* to,
+    const PROCESSING_DEVICE kDeviceSrc, const PROCESSING_DEVICE kDeviceDst,
+    const size_t kNumBytes);
+size_t getImageElementsNumber(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel);
+
+
 
 void rgb_to_gray(uint8_t* rgbImage, uint8_t* gray,
     const int kWidth, const int kHeight,
@@ -19,3 +31,5 @@ void adjustContrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
 
 void adjustBrightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const int32_t kBrightness, const PROCESSING_DEVICE kDevice);
+
+}

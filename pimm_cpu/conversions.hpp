@@ -3,8 +3,9 @@
 #include <cstdint>
 #include <cstring>
 #include <cmath>
+#include "constants.hpp"
 
-namespace cpu {
+namespace pimm::cpu {
     void rgb_to_gray_mean(uint8_t* rgb, uint8_t* gray, const size_t kSize);
     void rgb_to_gray_weighted(uint8_t* rgb, uint8_t* gray, const size_t kSize);
 
