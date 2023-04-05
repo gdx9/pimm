@@ -42,40 +42,40 @@ void rgb_to_gray(uint8_t* rgb, uint8_t* gray,
         cpu::rgb_to_gray_weighted(rgb, gray, kWidth*kHeight);
 }
 
-void invertColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void invert_color(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const PROCESSING_DEVICE kDevice){
 
     // CPU
-    cpu::invertColor(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3);
+    cpu::invert_color(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3);
 }
 
-void solariseColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void solarise_color(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const uint8_t kThreshold, const PROCESSING_DEVICE kDevice){
 
     // CPU
-    cpu::solariseColor(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kThreshold);
+    cpu::solarise_color(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kThreshold);
 
 }
 
-void adjustGamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void adjust_gamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight,
     const float kGamma, const PROCESSING_DEVICE kDevice){
 
     // CPU
-    cpu::adjustGamma(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kGamma);
+    cpu::adjust_gamma(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kGamma);
 }
 
-void adjustContrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void adjust_contrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const float kContrast, const PROCESSING_DEVICE kDevice){
 
     // CPU
-    cpu::adjustContrast(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kContrast);
+    cpu::adjust_contrast(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kContrast);
 }
 
-void adjustBrightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void adjust_brightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const int32_t kBrightness, const PROCESSING_DEVICE kDevice){
 
     // CPU
-    cpu::adjustBrightness(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kBrightness);
+    cpu::adjust_brightness(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kBrightness);
 }
 }
