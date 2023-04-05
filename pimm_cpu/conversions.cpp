@@ -26,13 +26,13 @@ void cpu::rgb_to_gray_weighted(uint8_t* rgb, uint8_t* gray, const size_t kSize){
     }
 }
 
-void cpu::invertColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst, const size_t kSize){
+void cpu::invert_color(uint8_t* rgbImageSrc, uint8_t* rgbImageDst, const size_t kSize){
     for(size_t i = 0; i < kSize; ++i){
         rgbImageDst[i] = 255 - rgbImageSrc[i];
     }
 }
 
-void cpu::solariseColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void cpu::solarise_color(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const size_t kSize, const uint8_t kThreshold){
     for(size_t i = 0; i < kSize; ++i){
         uint8_t val = rgbImageSrc[i];
@@ -41,7 +41,7 @@ void cpu::solariseColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     }
 }
 
-void cpu::adjustGamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void cpu::adjust_gamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const size_t kSize, const float kGamma){
     for(size_t i = 0; i < kSize; ++i){
         float val = pow((static_cast<float>(rgbImageSrc[i]) / 255.f), kGamma) * 255.f;
@@ -50,7 +50,7 @@ void cpu::adjustGamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     }
 }
 
-void cpu::adjustContrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void cpu::adjust_contrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const size_t kSize, const float kContrast){
     //F = 259*(255+contrast)/(255 *(259-contrast))
     const float kF = 259.f * (255.f + kContrast) / (255.f * (259.f - kContrast));
@@ -62,7 +62,7 @@ void cpu::adjustContrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     }
 }
 
-void cpu::adjustBrightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void cpu::adjust_brightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const size_t kSize, const int32_t kBrightness){
     for(size_t i = 0; i < kSize; ++i){
         int32_t val = static_cast<int32_t>(rgbImageSrc[i]) + kBrightness;

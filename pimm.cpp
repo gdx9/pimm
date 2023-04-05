@@ -2,30 +2,30 @@
 #include "cpu_management.hpp"
 #include "conversions.hpp"
 #include "pimm_utils.hpp"
+#include "cpu_utilities.hpp"
 
 using namespace std;
-using namespace pimm::utils;
 
 namespace pimm{
 
-uint8_t* allocateImageBytes(const size_t kWidth, const size_t kHeight,
+uint8_t* allocate_image_bytes(const size_t kWidth, const size_t kHeight,
     const COLOR_MODEL kColorModel, const PROCESSING_DEVICE kDevice){
     // CPU
-    return cpu::allocateImageBytes(kWidth, kHeight, kColorModel);
+    return cpu::allocate_image_bytes(kWidth, kHeight, kColorModel);
 }
 
-void releaseImageBytes(uint8_t* imageBytes, const PROCESSING_DEVICE kDevice){
+void release_image_bytes(uint8_t* imageBytes, const PROCESSING_DEVICE kDevice){
     // CPU
-    cpu::releaseImageBytes(imageBytes);
+    cpu::release_image_bytes(imageBytes);
 }
 
-void copyImageBytesToDevice(uint8_t* from, uint8_t* to,
+void copy_image_bytes_to_device(uint8_t* from, uint8_t* to,
     const PROCESSING_DEVICE kDeviceSrc, const PROCESSING_DEVICE kDeviceDst, const size_t kNumBytes){
     // to cpu
-    cpu::copyCpu2Cpu(from, to, kNumBytes);
+    cpu::copy_cpu_2_cpu(from, to, kNumBytes);
 }
-size_t getImageElementsNumber(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel){
-    return getImageElementsNumber1(kWidth, kHeight, kColorModel);
+size_t get_image_element_number(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel){
+    return pimm::utils::get_image_element_number(kWidth, kHeight, kColorModel);
 }
 
 
@@ -42,40 +42,51 @@ void rgb_to_gray(uint8_t* rgb, uint8_t* gray,
         cpu::rgb_to_gray_weighted(rgb, gray, kWidth*kHeight);
 }
 
-void invertColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void invert_color(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const PROCESSING_DEVICE kDevice){
 
     // CPU
-    cpu::invertColor(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3);
+    cpu::invert_color(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3);
 }
 
-void solariseColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void solarise_color(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const uint8_t kThreshold, const PROCESSING_DEVICE kDevice){
 
     // CPU
-    cpu::solariseColor(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kThreshold);
+    cpu::solarise_color(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kThreshold);
 
 }
 
-void adjustGamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void adjust_gamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight,
     const float kGamma, const PROCESSING_DEVICE kDevice){
 
     // CPU
-    cpu::adjustGamma(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kGamma);
+    cpu::adjust_gamma(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kGamma);
 }
 
-void adjustContrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void adjust_contrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const float kContrast, const PROCESSING_DEVICE kDevice){
 
     // CPU
-    cpu::adjustContrast(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kContrast);
+    cpu::adjust_contrast(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kContrast);
 }
 
-void adjustBrightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void adjust_brightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const int32_t kBrightness, const PROCESSING_DEVICE kDevice){
 
     // CPU
-    cpu::adjustBrightness(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kBrightness);
+    cpu::adjust_brightness(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kBrightness);
 }
+
+void apply_kernel(uint8_t* src, uint8_t* dst, const size_t kImageCols, const size_t kImageRows,
+    float* kernel, const size_t kKernelRows, const size_t kKernelCols){
+    // CPU
+    cpu::apply_kernel(src, dst, kImageCols, kImageRows, kernel, kKernelRows, kKernelCols);
+}
+
+float* get_gaussian_kernel(const size_t kKernelSize, const float kSigma){
+    return utils::get_gaussian_kernel(kKernelSize, kSigma);
+}
+
 }

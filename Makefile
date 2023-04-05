@@ -11,6 +11,7 @@ LIB_PIMM = libpimm.so
 # cpu
 PIMM_CPU_MANAGEMENT_OBJ = ./$(PIMM_CPU_DIR)/cpu_management.o
 PIMM_CPU_CONVERSIONS_OBJ = ./$(PIMM_CPU_DIR)/pimm_cpu_conversions.o
+PIMM_CPU_UTILITIES_OBJ = ./$(PIMM_CPU_DIR)/cpu_utilities.o
 
 all: $(LIB_PIMM)
 
@@ -22,7 +23,7 @@ $(PIMM_LIB_OBJ): pimm.cpp
 
 $(LIB_PIMM): $(PIMM_LIB_OBJ) $(PIMM_UTILS_OBJ)
 	make -C ./pimm_cpu
-	$(CXX) -shared -o $@ $^ $(PIMM_CPU_MANAGEMENT_OBJ) $(PIMM_CPU_CONVERSIONS_OBJ)
+	$(CXX) -shared -o $@ $^ $(PIMM_CPU_MANAGEMENT_OBJ) $(PIMM_CPU_CONVERSIONS_OBJ) $(PIMM_CPU_UTILITIES_OBJ)
 
 clean:
 	make -C ./$(PIMM_CPU_DIR) clean

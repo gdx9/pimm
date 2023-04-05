@@ -6,9 +6,9 @@
 #include "constants.hpp"
 
 namespace pimm::cpu {
-uint8_t* allocateImageBytes(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel);
+uint8_t* allocate_image_bytes(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel);
 
-void releaseImageBytes(uint8_t* imageBytes);
+void release_image_bytes(uint8_t* imageBytes);
 
-void copyCpu2Cpu(uint8_t* from, uint8_t* to, const size_t kNumBytes);
+void copy_cpu_2_cpu(uint8_t* from, uint8_t* to, const size_t kNumBytes);
 }
