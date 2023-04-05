@@ -2,6 +2,7 @@
 #include "cpu_management.hpp"
 #include "conversions.hpp"
 #include "pimm_utils.hpp"
+#include "cpu_utilities.hpp"
 
 using namespace std;
 
@@ -77,4 +78,15 @@ void adjust_brightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     // CPU
     cpu::adjust_brightness(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kBrightness);
 }
+
+void apply_kernel(uint8_t* src, uint8_t* dst, const size_t kImageCols, const size_t kImageRows,
+    float* kernel, const size_t kKernelRows, const size_t kKernelCols){
+    // CPU
+    cpu::apply_kernel(src, dst, kImageCols, kImageRows, kernel, kKernelRows, kKernelCols);
+}
+
+float* get_gaussian_kernel(const size_t kKernelSize, const float kSigma){
+    return utils::get_gaussian_kernel(kKernelSize, kSigma);
+}
+
 }

@@ -35,4 +35,9 @@ void adjust_contrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
 void adjust_brightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
     const int kWidth, const int kHeight, const int32_t kBrightness, const PROCESSING_DEVICE kDevice);
 
+void apply_kernel(uint8_t* src, uint8_t* dst, const size_t kImageCols, const size_t kImageRows,
+    float* kernel, const size_t kKernelRows, const size_t kKernelCols);
+
+float* get_gaussian_kernel(const size_t kKernelSize, const float kSigma);
+
 }
