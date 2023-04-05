@@ -3,13 +3,16 @@
 #include <cstdint>
 
 namespace pimm{
-uint8_t* allocateImageBytes(const size_t kWidth, const size_t kHeight,
+uint8_t* allocate_image_bytes(const size_t kWidth, const size_t kHeight,
     const COLOR_MODEL kColorModel, const PROCESSING_DEVICE kDevice);
-void releaseImageBytes(uint8_t* imageBytes, const PROCESSING_DEVICE kDevice);
-void copyImageBytesToDevice(uint8_t* from, uint8_t* to,
+
+void release_image_bytes(uint8_t* imageBytes, const PROCESSING_DEVICE kDevice);
+
+void copy_image_bytes_to_device(uint8_t* from, uint8_t* to,
     const PROCESSING_DEVICE kDeviceSrc, const PROCESSING_DEVICE kDeviceDst,
     const size_t kNumBytes);
-size_t getImageElementsNumber(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel);
+
+size_t get_image_element_number(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel);
 
 
 

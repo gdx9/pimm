@@ -4,28 +4,27 @@
 #include "pimm_utils.hpp"
 
 using namespace std;
-using namespace pimm::utils;
 
 namespace pimm{
 
-uint8_t* allocateImageBytes(const size_t kWidth, const size_t kHeight,
+uint8_t* allocate_image_bytes(const size_t kWidth, const size_t kHeight,
     const COLOR_MODEL kColorModel, const PROCESSING_DEVICE kDevice){
     // CPU
-    return cpu::allocateImageBytes(kWidth, kHeight, kColorModel);
+    return cpu::allocate_image_bytes(kWidth, kHeight, kColorModel);
 }
 
-void releaseImageBytes(uint8_t* imageBytes, const PROCESSING_DEVICE kDevice){
+void release_image_bytes(uint8_t* imageBytes, const PROCESSING_DEVICE kDevice){
     // CPU
-    cpu::releaseImageBytes(imageBytes);
+    cpu::release_image_bytes(imageBytes);
 }
 
-void copyImageBytesToDevice(uint8_t* from, uint8_t* to,
+void copy_image_bytes_to_device(uint8_t* from, uint8_t* to,
     const PROCESSING_DEVICE kDeviceSrc, const PROCESSING_DEVICE kDeviceDst, const size_t kNumBytes){
     // to cpu
-    cpu::copyCpu2Cpu(from, to, kNumBytes);
+    cpu::copy_cpu_2_cpu(from, to, kNumBytes);
 }
-size_t getImageElementsNumber(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel){
-    return getImageElementsNumber1(kWidth, kHeight, kColorModel);
+size_t get_image_element_number(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel){
+    return pimm::utils::get_image_element_number(kWidth, kHeight, kColorModel);
 }
 
 
