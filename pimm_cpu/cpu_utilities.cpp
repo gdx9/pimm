@@ -51,4 +51,20 @@ void apply_kernel(uint8_t* src, uint8_t* dst, const size_t kImageCols, const siz
 
 }
 
+template<typename T>
+T* create_padded_image_zeros(T* const grayImage, const size_t kRows, const size_t kCols, size_t kPadding){
+    const size_t kRowsPadded = kRows + kPadding*2;
+    const size_t kColsPadded = kCols + kPadding*2;
+    T* image_padded = new T[kRowsPadded * kColsPadded];
+
+    for(size_t yOrig = 0, yPad = kPadding; yOrig < kRows; ++yOrig, ++yPad){
+        for(size_t xOrig = 0, xPad = kPadding; xOrig < kCols; ++xOrig, ++xPad){
+            image_padded[yPad * kColsPadded + xPad] = grayImage[yOrig*kCols + xOrig];
+
+        }
+    }
+
+    return image_padded;
+}
+
 }
