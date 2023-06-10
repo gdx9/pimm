@@ -3,6 +3,9 @@
 #include <cstdint>
 
 namespace pimm{
+void Init();
+void Close();
+
 uint8_t* AllocateImageMemoryBytes(const size_t kWidth, const size_t kHeight,
     const COLOR_MODEL kColorModel, const PROCESSING_DEVICE kDevice);
 
@@ -14,25 +17,23 @@ void CopyImageMemoryBytesToDevice(uint8_t* from, uint8_t* to,
 
 size_t GetNumElementsForColorModel(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel);
 
-
-
-void RgbToGray(uint8_t* const rgb, uint8_t* gray,
+void RgbToGray(uint8_t* const rgb888, uint8_t* gray,
     const int kWidth, const int kHeight,
     const PROCESSING_DEVICE kDevice, const GRAYSCALE_CONVERSION_TYPE kGrayConvType);
 
-void InvertColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void InvertColor(uint8_t* rgb888_src, uint8_t* rgb888_dst,
     const int kWidth, const int kHeight, const PROCESSING_DEVICE kDevice);
 
-void SolariseColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void SolariseColor(uint8_t* rgb888_src, uint8_t* rgb888_dst,
     const int kWidth, const int kHeight, const uint8_t kThreshold, const PROCESSING_DEVICE kDevice);
 
-void AdjustGamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void AdjustGamma(uint8_t* rgb888_src, uint8_t* rgb888_dst,
     const int kWidth, const int kHeight, const float kGamma, const PROCESSING_DEVICE kDevice);
 
-void AdjustContrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void AdjustContrast(uint8_t* rgb888_src, uint8_t* rgb888_dst,
     const int kWidth, const int kHeight, const float kContrast, const PROCESSING_DEVICE kDevice);
 
-void AdjustBrightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void AdjustBrightness(uint8_t* rgb888_src, uint8_t* rgb888_dst,
     const int kWidth, const int kHeight, const int32_t kBrightness, const PROCESSING_DEVICE kDevice);
 
 void ApplyConvolutionGray(uint8_t* const src_gray, uint8_t* dst_gray, const int32_t kImageCols, const int32_t kImageRows,
