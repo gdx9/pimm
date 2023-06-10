@@ -4,7 +4,6 @@
 using namespace std;
 
 namespace pimm{
-
 void cpu::RgbToGrayMean(uint8_t* const rgb888, uint8_t* gray, const size_t kSizeGray){
     uint8_t* r = rgb888;
     uint8_t* g = r + kSizeGray;
