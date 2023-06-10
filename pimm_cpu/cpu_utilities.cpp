@@ -33,7 +33,7 @@ void apply_kernel(uint8_t* src, uint8_t* dst, const size_t kImageCols, const siz
                     int32_t posIy = y - kKernelRows/2 + kr;
                     int32_t posIx = x - kKernelCols/2 + kc;
 
-                    // mirroring
+                    // use border values
                     posIy = (posIy < 0) ? 0 : (posIy > (kImageRows-1)) ? (kImageRows-1) : posIy;
                     posIx = (posIx < 0) ? 0 : (posIx > (kImageCols-1)) ? (kImageCols-1) : posIx;
 
@@ -65,6 +65,37 @@ T* create_padded_image_zeros(T* const grayImage, const size_t kRows, const size_
     }
 
     return image_padded;
+}
+
+void Rgb32ToRgb888(uint8_t* const rgb32, uint8_t* rgb888, const size_t kRows, const size_t kCols){
+    const size_t kPlaneSize = kRows * kCols;
+    const size_t kNumElements = kPlaneSize * 3;
+
+    uint8_t* r_plane_ptr = rgb888;
+    uint8_t* g_plane_ptr = rgb888 + kPlaneSize;
+    uint8_t* b_plane_ptr = g_plane_ptr + kPlaneSize;
+
+    for(size_t r_pos_32 = 0, pos_888 = 0; r_pos_32 < kNumElements; r_pos_32 += 3, ++pos_888){
+        r_plane_ptr[pos_888] = rgb32[r_pos_32];
+        g_plane_ptr[pos_888] = rgb32[r_pos_32+1];
+        b_plane_ptr[pos_888] = rgb32[r_pos_32+2];
+    }
+}
+
+//template<typename T>
+void Rgb888ToRgb32(uint8_t* const rgb888, uint8_t* rgb32, const size_t kRows, const size_t kCols){
+    const size_t kPlaneSize = kRows * kCols;
+    const size_t kNumElements = kPlaneSize * 3;
+
+    uint8_t* r_plane_ptr = rgb888;
+    uint8_t* g_plane_ptr = rgb888 + kPlaneSize;
+    uint8_t* b_plane_ptr = g_plane_ptr + kPlaneSize;
+
+    for(size_t r_pos_32 = 0, pos_888 = 0; r_pos_32 < kNumElements; r_pos_32 += 3, ++pos_888){
+        rgb32[r_pos_32] = r_plane_ptr[pos_888];
+        rgb32[r_pos_32+1] = g_plane_ptr[pos_888];
+        rgb32[r_pos_32+2] = b_plane_ptr[pos_888];
+    }
 }
 
 }

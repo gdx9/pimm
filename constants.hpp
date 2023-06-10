@@ -13,8 +13,9 @@ enum class GRAYSCALE_CONVERSION_TYPE{
 
 enum class COLOR_MODEL{
     GRAY = 0,
-    RGB444 = 1,
-    YCBCR444 = 2// TODO: ADD not supported
+    RGB32 = 1,
+    RGB888 = 2,
+    YCBCR444 = 3// TODO: ADD not supported
 };
 
 }

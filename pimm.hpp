@@ -40,4 +40,7 @@ void apply_kernel(uint8_t* src, uint8_t* dst, const size_t kImageCols, const siz
 
 float* get_gaussian_kernel(const size_t kKernelSize, const float kSigma);
 
+void Rgb32ToRgb888(uint8_t* const rgb32, uint8_t* rgb888, const size_t kRows, const size_t kCols);
+void Rgb888ToRgb32(uint8_t* const rgb888, uint8_t* rgb32, const size_t kRows, const size_t kCols);
+
 }
