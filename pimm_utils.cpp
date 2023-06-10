@@ -7,7 +7,8 @@ size_t get_image_element_number(const size_t kWidth, const size_t kHeight, const
     switch(kColorModel){
         case COLOR_MODEL::GRAY:
             return kWidth * kHeight;
-        case COLOR_MODEL::RGB444:
+        case COLOR_MODEL::RGB32:
+        case COLOR_MODEL::RGB888:
         case COLOR_MODEL::YCBCR444:
             return kWidth * kHeight * 3;
         default:

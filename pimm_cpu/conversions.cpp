@@ -4,6 +4,7 @@ using namespace std;
 
 namespace pimm{
 
+<<<<<<< HEAD
 void cpu::rgb_to_gray_mean(uint8_t* rgb, uint8_t* gray, const size_t kSizeGray){
     for(size_t pos_rgb = 0, pos_gray = 0; pos_gray < kSizeGray; pos_rgb += 3, ++pos_gray){
         int32_t val = (static_cast<int32_t>(rgb[pos_rgb + 0])
@@ -21,6 +22,33 @@ void cpu::rgb_to_gray_weighted(uint8_t* rgb, uint8_t* gray, const size_t kSizeGr
                     + static_cast<float>(rgb[pos_rgb + 2]) * 0.144f);
         // clip
         gray[pos_gray] = static_cast<uint8_t>((val > 255.f) ? 255.f : (val < 0.f) ? 0.f : val);
+=======
+void cpu::rgb_to_gray_mean(uint8_t* rgb888, uint8_t* gray, const size_t kSizeGray){
+    uint8_t* r = rgb888;
+    uint8_t* g = r + kSizeGray;
+    uint8_t* b = g + kSizeGray;
+
+    for(size_t pos = 0; pos < kSizeGray; ++pos){
+        int32_t val = (static_cast<int32_t>(r[pos])
+                    + static_cast<int32_t>(g[pos])
+                    + static_cast<int32_t>(b[pos])) / 3;
+        // clip
+        gray[pos] = static_cast<uint8_t>((val > 255) ? 255 : (val < 0) ? 0 : val);
+    }
+}
+
+void cpu::rgb_to_gray_weighted(uint8_t* rgb888, uint8_t* gray, const size_t kSizeGray){
+    uint8_t* r = rgb888;
+    uint8_t* g = r + kSizeGray;
+    uint8_t* b = g + kSizeGray;
+
+    for(size_t pos = 0; pos < kSizeGray; ++pos){
+        float val = (static_cast<float>(r[pos]) * 0.299f
+                    + static_cast<float>(g[pos]) * 0.587f
+                    + static_cast<float>(b[pos]) * 0.144f);
+        // clip
+        gray[pos] = static_cast<uint8_t>((val > 255.f) ? 255.f : (val < 0.f) ? 0.f : val);
+>>>>>>> develop
     }
 }
 
