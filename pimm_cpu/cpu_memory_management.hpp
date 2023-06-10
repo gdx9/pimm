@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <cstring>
-#include "cpu_constants.hpp"
+#include "pimm_constants.hpp"
 #include "pimm_utils.hpp"
 
 namespace pimm::cpu {
