@@ -1,9 +1,11 @@
-#include "conversions.hpp"
+#include "cpu_conversions.hpp"
+#include <cmath>
 
 using namespace std;
 
 namespace pimm{
 
+<<<<<<< HEAD:pimm_cpu/conversions.cpp
 <<<<<<< HEAD
 void cpu::rgb_to_gray_mean(uint8_t* rgb, uint8_t* gray, const size_t kSizeGray){
     for(size_t pos_rgb = 0, pos_gray = 0; pos_gray < kSizeGray; pos_rgb += 3, ++pos_gray){
@@ -24,6 +26,9 @@ void cpu::rgb_to_gray_weighted(uint8_t* rgb, uint8_t* gray, const size_t kSizeGr
         gray[pos_gray] = static_cast<uint8_t>((val > 255.f) ? 255.f : (val < 0.f) ? 0.f : val);
 =======
 void cpu::rgb_to_gray_mean(uint8_t* rgb888, uint8_t* gray, const size_t kSizeGray){
+=======
+void cpu::RgbToGrayMean(uint8_t* const rgb888, uint8_t* gray, const size_t kSizeGray){
+>>>>>>> develop:pimm_cpu/cpu_conversions.cpp
     uint8_t* r = rgb888;
     uint8_t* g = r + kSizeGray;
     uint8_t* b = g + kSizeGray;
@@ -37,7 +42,7 @@ void cpu::rgb_to_gray_mean(uint8_t* rgb888, uint8_t* gray, const size_t kSizeGra
     }
 }
 
-void cpu::rgb_to_gray_weighted(uint8_t* rgb888, uint8_t* gray, const size_t kSizeGray){
+void cpu::RgbToGrayWeighted(uint8_t* const rgb888, uint8_t* gray, const size_t kSizeGray){
     uint8_t* r = rgb888;
     uint8_t* g = r + kSizeGray;
     uint8_t* b = g + kSizeGray;
@@ -52,22 +57,22 @@ void cpu::rgb_to_gray_weighted(uint8_t* rgb888, uint8_t* gray, const size_t kSiz
     }
 }
 
-void cpu::invert_color(uint8_t* rgbImageSrc, uint8_t* rgbImageDst, const size_t kSize){
+void cpu::InvertColor(uint8_t* const rgb888_src, uint8_t* rgb888_dst, const size_t kSize){
     for(size_t i = 0; i < kSize; ++i){
-        rgbImageDst[i] = 255 - rgbImageSrc[i];
+        rgb888_dst[i] = 255 - rgb888_src[i];
     }
 }
 
-void cpu::solarise_color(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void cpu::SolariseColor(uint8_t* const rgb888_src, uint8_t* rgb888_dst,
     const size_t kSize, const uint8_t kThreshold){
     for(size_t i = 0; i < kSize; ++i){
-        uint8_t val = rgbImageSrc[i];
+        uint8_t val = rgb888_src[i];
         if(val < kThreshold) val = 255 - val;
-        rgbImageDst[i] = val;
+        rgb888_dst[i] = val;
     }
 }
 
-uint8_t* prepare_gamma_lut_table(const float kGamma){
+uint8_t* PrepareGammaLutTable(const float kGamma){
     // prepare gamma lut table
     // increases speed: from approximately 48 ms to 16 ms
     const size_t kNumElements = 256;
@@ -83,20 +88,20 @@ uint8_t* prepare_gamma_lut_table(const float kGamma){
 
     return gamma_lut_table;
 }
-void cpu::adjust_gamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void cpu::AdjustGamma(uint8_t* const rgb888_src, uint8_t* rgb888_dst,
     const size_t kSize, const float kGamma){
 
-    const uint8_t* const gamma_lut_table = prepare_gamma_lut_table(kGamma);
+    const uint8_t* const gamma_lut_table = PrepareGammaLutTable(kGamma);
 
     // apply gamma to image
     for(size_t i = 0; i < kSize; ++i){
-        rgbImageDst[i] = gamma_lut_table[rgbImageSrc[i]];
+        rgb888_dst[i] = gamma_lut_table[rgb888_src[i]];
     }
 
     delete [] gamma_lut_table;
 }
 
-uint8_t* prepare_contrast_lut_table(const float kContrast){
+uint8_t* PrepareContrastLutTable(const float kContrast){
     // prepare contrast lut table
     // increases speed: from approximately 15 ms to 8 ms
     const size_t kNumElements = 256;
@@ -114,23 +119,23 @@ uint8_t* prepare_contrast_lut_table(const float kContrast){
 
     return contrast_lut_table;
 }
-void cpu::adjust_contrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void cpu::AdjustContrast(uint8_t* const rgb888_src, uint8_t* rgb888_dst,
     const size_t kSize, const float kContrast){
 
-    const uint8_t* const contrast_lut_table = prepare_contrast_lut_table(kContrast);
+    const uint8_t* const contrast_lut_table = PrepareContrastLutTable(kContrast);
 
     for(size_t i = 0; i < kSize; ++i){
-        rgbImageDst[i] = contrast_lut_table[rgbImageSrc[i]];
+        rgb888_dst[i] = contrast_lut_table[rgb888_src[i]];
     }
 
     delete [] contrast_lut_table;
 }
 
-void cpu::adjust_brightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void cpu::AdjustBrightness(uint8_t* const rgb888_src, uint8_t* rgb888_dst,
     const size_t kSize, const int32_t kBrightness){
     for(size_t i = 0; i < kSize; ++i){
-        int32_t val = static_cast<int32_t>(rgbImageSrc[i]) + kBrightness;
-        rgbImageDst[i] = static_cast<uint8_t>((val < 0) ? 0 : (val > 255) ? 255 : val);
+        int32_t val = static_cast<int32_t>(rgb888_src[i]) + kBrightness;
+        rgb888_dst[i] = static_cast<uint8_t>((val < 0) ? 0 : (val > 255) ? 255 : val);
     }
 }
 
