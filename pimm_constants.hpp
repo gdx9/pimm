@@ -4,7 +4,7 @@
 namespace pimm{
 enum class PROCESSING_DEVICE{
     CPU = 0,
-    GPU = 1
+    CUDA = 1
 };
 
 enum class GRAYSCALE_CONVERSION_TYPE{
