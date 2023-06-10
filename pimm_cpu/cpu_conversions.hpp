@@ -1,5 +1,5 @@
 #pragma once
-#include "cpu_constants.hpp"
+#include "pimm_constants.hpp"
 #include <cstdint>
 
 namespace pimm::cpu {
