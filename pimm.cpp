@@ -1,82 +1,141 @@
 #include "pimm.hpp"
+#include "pimm_utils.hpp"
 #include "cpu_memory_management.hpp"
 #include "cpu_conversions.hpp"
-#include "pimm_utils.hpp"
 #include "cpu_utilities.hpp"
+#include "cuda_memory_management.cuh"
+#include "cuda_conversions.cuh"
 
 using namespace std;
 
 namespace pimm{
 
+void Init(){
+    cuda::init();
+}
+void Close(){
+    cuda::close();
+}
+
 uint8_t* AllocateImageMemoryBytes(const size_t kWidth, const size_t kHeight,
     const COLOR_MODEL kColorModel, const PROCESSING_DEVICE kDevice){
-    // CPU
-    return cpu::AllocateImageMemoryBytes(kWidth, kHeight, kColorModel);
+
+    if(PROCESSING_DEVICE::CUDA == kDevice){
+        // CUDA
+        return cuda::AllocateImageMemoryBytes(kWidth, kHeight, kColorModel);
+
+    }else{
+        // CPU
+        return cpu::AllocateImageMemoryBytes(kWidth, kHeight, kColorModel);
+    }
 }
 
 void ReleaseImageMemoryBytes(uint8_t* image_bytes, const PROCESSING_DEVICE kDevice){
-    // CPU
-    cpu::ReleaseImageMemoryBytes(image_bytes);
+    if(PROCESSING_DEVICE::CUDA == kDevice){
+        // CUDA
+        cuda::ReleaseImageMemoryBytes(image_bytes);
+    }else{
+        // CPU
+        cpu::ReleaseImageMemoryBytes(image_bytes);
+    }
 }
 
 void CopyImageMemoryBytesToDevice(uint8_t* from, uint8_t* to,
     const PROCESSING_DEVICE kDeviceSrc, const PROCESSING_DEVICE kDeviceDst, const size_t kNumBytes){
     // to cpu
-    cpu::CopyCpuToCpu(from, to, kNumBytes);
+    if(PROCESSING_DEVICE::CPU == kDeviceSrc && kDeviceDst == PROCESSING_DEVICE::CPU){
+        cpu::CopyCpuToCpu(from, to, kNumBytes);
+    }
+
+    if(PROCESSING_DEVICE::CPU == kDeviceSrc && kDeviceDst == PROCESSING_DEVICE::CUDA){
+        cuda::CopyCpuToGpu(from, to, kNumBytes);
+    }
+
+    if(PROCESSING_DEVICE::CUDA == kDeviceSrc && kDeviceDst == PROCESSING_DEVICE::CUDA){
+        cuda::CopyGpuToGpu(from, to, kNumBytes);
+    }
+
+    if(PROCESSING_DEVICE::CUDA == kDeviceSrc && kDeviceDst == PROCESSING_DEVICE::CPU){
+        cuda::CopyGpuToCpu(from, to, kNumBytes);
+    }
+
 }
 size_t GetNumElementsForColorModel(const size_t kWidth, const size_t kHeight, const COLOR_MODEL kColorModel){
     return pimm::utils::GetNumElementsForColorModel(kWidth, kHeight, kColorModel);
 }
 
-
-
-
-void RgbToGray(uint8_t* const rgb, uint8_t* gray,
+void RgbToGray(uint8_t* const rgb888, uint8_t* gray,
     const int kWidth, const int kHeight,
     const PROCESSING_DEVICE kDevice, const GRAYSCALE_CONVERSION_TYPE kGrayConvType){
 
-    // CPU
-    if(GRAYSCALE_CONVERSION_TYPE::MEAN == kGrayConvType)
-        cpu::RgbToGrayMean(rgb, gray, kWidth*kHeight);
-    else if(GRAYSCALE_CONVERSION_TYPE::WEIGHTED == kGrayConvType)
-        cpu::RgbToGrayWeighted(rgb, gray, kWidth*kHeight);
+    if(PROCESSING_DEVICE::CUDA == kDevice){
+        if(GRAYSCALE_CONVERSION_TYPE::MEAN == kGrayConvType)
+            cuda::RgbToGrayMean(rgb888, gray, kWidth, kHeight);
+        else if(GRAYSCALE_CONVERSION_TYPE::WEIGHTED == kGrayConvType)
+            cuda::RgbToGrayWeighted(rgb888, gray, kWidth, kHeight);
+    }else{
+        // CPU
+        if(GRAYSCALE_CONVERSION_TYPE::MEAN == kGrayConvType)
+            cpu::RgbToGrayMean(rgb888, gray, kWidth*kHeight);
+        else if(GRAYSCALE_CONVERSION_TYPE::WEIGHTED == kGrayConvType)
+            cpu::RgbToGrayWeighted(rgb888, gray, kWidth*kHeight);
+    }
 }
 
-void InvertColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void InvertColor(uint8_t* rgb888_src, uint8_t* rgb888_dst,
     const int kWidth, const int kHeight, const PROCESSING_DEVICE kDevice){
 
-    // CPU
-    cpu::InvertColor(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3);
+    if(PROCESSING_DEVICE::CUDA == kDevice){
+        cuda::InvertColor(rgb888_src, rgb888_dst, kWidth * kHeight * 3);
+    } else {
+        // CPU
+        cpu::InvertColor(rgb888_src, rgb888_dst, kWidth * kHeight * 3);
+
+    }
+
 }
 
-void SolariseColor(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void SolariseColor(uint8_t* rgb888_src, uint8_t* rgb888_dst,
     const int kWidth, const int kHeight, const uint8_t kThreshold, const PROCESSING_DEVICE kDevice){
 
-    // CPU
-    cpu::SolariseColor(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kThreshold);
-
+    if(PROCESSING_DEVICE::CUDA == kDevice){
+        cuda::SolariseColor(rgb888_src, rgb888_dst, kWidth * kHeight * 3, kThreshold);
+    } else {
+        // CPU
+        cpu::SolariseColor(rgb888_src, rgb888_dst, kWidth * kHeight * 3, kThreshold);
+    }
 }
 
-void AdjustGamma(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void AdjustGamma(uint8_t* rgb888_src, uint8_t* rgb888_dst,
     const int kWidth, const int kHeight,
     const float kGamma, const PROCESSING_DEVICE kDevice){
 
-    // CPU
-    cpu::AdjustGamma(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kGamma);
+    if(PROCESSING_DEVICE::CUDA == kDevice){
+        cuda::AdjustGamma(rgb888_src, rgb888_dst, kWidth * kHeight * 3, kGamma);
+    } else {
+        // CPU
+        cpu::AdjustGamma(rgb888_src, rgb888_dst, kWidth * kHeight * 3, kGamma);
+    }
 }
 
-void AdjustContrast(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void AdjustContrast(uint8_t* rgb888_src, uint8_t* rgb888_dst,
     const int kWidth, const int kHeight, const float kContrast, const PROCESSING_DEVICE kDevice){
-
-    // CPU
-    cpu::AdjustContrast(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kContrast);
+    if(PROCESSING_DEVICE::CUDA == kDevice){
+        cuda::AdjustContrast(rgb888_src, rgb888_dst, kWidth * kHeight * 3, kContrast);
+    } else {
+        // CPU
+        cpu::AdjustContrast(rgb888_src, rgb888_dst, kWidth * kHeight * 3, kContrast);
+    }
 }
 
-void AdjustBrightness(uint8_t* rgbImageSrc, uint8_t* rgbImageDst,
+void AdjustBrightness(uint8_t* rgb888_src, uint8_t* rgb888_dst,
     const int kWidth, const int kHeight, const int32_t kBrightness, const PROCESSING_DEVICE kDevice){
-
-    // CPU
-    cpu::AdjustBrightness(rgbImageSrc, rgbImageDst, kWidth * kHeight * 3, kBrightness);
+    if(PROCESSING_DEVICE::CUDA == kDevice){
+        cuda::AdjustBrightness(rgb888_src, rgb888_dst, kWidth * kHeight * 3, kBrightness);
+    } else {
+        // CPU
+        cpu::AdjustBrightness(rgb888_src, rgb888_dst, kWidth * kHeight * 3, kBrightness);
+    }
 }
 
 void ApplyConvolutionGray(uint8_t* const src_gray, uint8_t* dst_gray, const int32_t kImageCols, const int32_t kImageRows,
