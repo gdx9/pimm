@@ -92,8 +92,6 @@ T* CreatePaddedImageZeros(T* const grayImage, const size_t kRows, const size_t k
     return image_padded;
 }
 
-<<<<<<< HEAD
-=======
 void Rgb32ToRgb888(uint8_t* const rgb32, uint8_t* rgb888, const size_t kRows, const size_t kCols){
     const size_t kPlaneSize = kRows * kCols;
     const size_t kNumElements = kPlaneSize * 3;
@@ -125,5 +123,4 @@ void Rgb888ToRgb32(uint8_t* const rgb888, uint8_t* rgb32, const size_t kRows, co
     }
 }
 
->>>>>>> develop
 }
