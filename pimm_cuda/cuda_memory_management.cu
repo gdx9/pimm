@@ -1,10 +1,11 @@
-#include "cuda_memory_management.cuh"
+#include "pimm_cuda.cuh"
 
 using namespace pimm::utils;
 
 namespace pimm::cuda {
-
+    
 cudaStream_t processing_stream;
+
 
 void init(){
     cudaStreamCreate(&processing_stream);

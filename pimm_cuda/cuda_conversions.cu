@@ -1,4 +1,4 @@
-#include "cuda_conversions.cuh"
+#include "pimm_cuda.cuh"
 #include <cmath>
 
 using namespace std;

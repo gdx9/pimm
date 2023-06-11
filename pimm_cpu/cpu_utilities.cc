@@ -1,8 +1,7 @@
-#include "cpu_utilities.hpp"
+#include "pimm_cpu.h"
 #include <cmath>
 
 namespace pimm::cpu {
-
 template <typename T>
 T* CreateFlippedKernel(T* kernel, const size_t kKernelRows, const size_t kKernelCols){
     const size_t kKernelElements = kKernelRows*kKernelCols;

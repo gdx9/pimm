@@ -20,10 +20,10 @@ PIMM_CUDA_CONVERSIONS_OBJ = ./$(PIMM_CUDA_DIR)/cuda_conversions.o
 
 all: $(LIB_PIMM)
 
-$(PIMM_UTILS_OBJ): pimm_utils.cpp
+$(PIMM_UTILS_OBJ): pimm_utils.cc
 	$(CXX) $(CXXFLAGS) -c $< $(INC_DIRS) -o $@
 
-$(PIMM_LIB_OBJ): pimm.cpp
+$(PIMM_LIB_OBJ): pimm.cc
 	$(CXX) $(CXXFLAGS) -c $< $(INC_DIRS) -o $@ -L/usr/local/cuda/lib64/ -lcudart -lcuda -ldl
 
 $(LIB_PIMM): $(PIMM_UTILS_OBJ) $(PIMM_LIB_OBJ)

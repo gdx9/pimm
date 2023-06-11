@@ -1,9 +1,9 @@
-#include "cpu_conversions.hpp"
+#include "pimm_cpu.h"
 #include <cmath>
 
 using namespace std;
 
-namespace pimm{
+namespace pimm {
 void cpu::RgbToGrayMean(uint8_t* const rgb888, uint8_t* gray, const size_t kSizeGray){
     uint8_t* r = rgb888;
     uint8_t* g = r + kSizeGray;
