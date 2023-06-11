@@ -1,15 +1,11 @@
-#include "pimm.hpp"
-#include "pimm_utils.hpp"
-#include "cpu_memory_management.hpp"
-#include "cpu_conversions.hpp"
-#include "cpu_utilities.hpp"
-#include "cuda_memory_management.cuh"
-#include "cuda_conversions.cuh"
+#include "pimm.h"
+#include "pimm_utils.h"
+#include "pimm_cpu.h"
+#include "pimm_cuda.cuh"
 
 using namespace std;
 
-namespace pimm{
-
+namespace pimm {
 void Init(){
     cuda::init();
 }

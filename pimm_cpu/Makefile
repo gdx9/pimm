@@ -12,12 +12,12 @@ PIMM_CPU_UTILITIES_OBJ = cpu_utilities.o
 all: $(PIMM_CPU_MEMORY_MANAGEMENT_OBJ)
 
 $(PIMM_CPU_MEMORY_MANAGEMENT_OBJ): $(PIMM_CPU_CONVERSIONS_OBJ) $(PIMM_CPU_UTILITIES_OBJ)
-	$(CXX) $(CXXFLAGS) -c cpu_memory_management.cpp $(INC_DIRS) -o $@
+	$(CXX) $(CXXFLAGS) -c cpu_memory_management.cc $(INC_DIRS) -o $@
 
-$(PIMM_CPU_CONVERSIONS_OBJ): cpu_conversions.cpp
+$(PIMM_CPU_CONVERSIONS_OBJ): cpu_conversions.cc
 	$(CXX) $(CXXFLAGS) -c $< $(INC_DIRS) -o $@
 
-$(PIMM_CPU_UTILITIES_OBJ): cpu_utilities.cpp
+$(PIMM_CPU_UTILITIES_OBJ): cpu_utilities.cc
 	$(CXX) $(CXXFLAGS) -c $< $(INC_DIRS) -o $@
 
 clean:

@@ -18,7 +18,7 @@ $(PIMM_CUDA_MEMORY_MANAGEMENT_OBJ): $(PIMM_CUDA_CONVERSIONS_OBJ)
 $(PIMM_CUDA_CONVERSIONS_OBJ): cuda_conversions.cu
 	$(NVCC) $(NVCCFLAGS) -c $< $(INC_DIRS) -o $@
 
-#$(PIMM_CUDA_UTILITIES_OBJ): cuda_utilities.cpp
+#$(PIMM_CUDA_UTILITIES_OBJ): cuda_utilities.cc
 #	$(NVCC) $(NVCCFLAGS) -c $< $(INC_DIRS) -o $@
 
 clean:
